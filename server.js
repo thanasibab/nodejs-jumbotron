@@ -8,7 +8,18 @@ var fs = require("fs");
 
 app.use('/assets', express.static('assets'));
 app.set('view engine', 'ejs');
-app.use(helmet());
+// app.use(helmet());
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                scriptSrc: ["'self'", "https://code.jquery.com", "https://cdnjs.cloudflare.com", "https://stackpath.bootstrapcdn.com"],
+                styleSrc: ["'self'", "fonts.googleapis.com", "'unsafe-inline'", "https://stackpath.bootstrapcdn.com"]
+            }
+        },
+    })
+);
 app.set('views', __dirname + '/views');
 
 // Configuration variables
